@@ -1,3 +1,5 @@
+insert into book_search_db.users (id, email, first_name, last_name, password, authority, id_deleted) values (1, 'taro@example.com', '太郎', '田中', 'password', 0, 0);
+
 insert into book_search_db.categories (id, name, id_deleted, sort_number) values (1, 'Java', 0, 1);
 insert into book_search_db.categories (id, name, id_deleted, sort_number) values (2, 'PHP', 0, 2);
 insert into book_search_db.categories (id, name, id_deleted, sort_number) values (3, 'JavaScript', 0, 3);
