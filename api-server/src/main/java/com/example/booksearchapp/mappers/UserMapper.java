@@ -1,9 +1,9 @@
 package com.example.booksearchapp.mappers;
 
-import com.example.booksearchapp.entities.User;
+import com.example.booksearchapp.entities.LoginUser;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    public User findByUserName(String userName);
+    public LoginUser findByUserName(String email);
 }
