@@ -5,10 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class Category {
+public class User {
     Integer id;
-    String name;
+    String firstName;
+    String lastName;
+    String password;
+    Integer authority;
     Boolean idDeleted;
-    Integer sortNumber;
 }

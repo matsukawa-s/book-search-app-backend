@@ -13,13 +13,11 @@ import java.util.List;
 public class CategoryResponse {
     Integer id;
     String name;
-    Integer sortNumber;
 
     public static CategoryResponse from(Category category){
         CategoryResponse categoryResponse = new CategoryResponse();
         categoryResponse.setId(category.getId());
         categoryResponse.setName(category.getName());
-        categoryResponse.setSortNumber(category.getSortNumber());
         return categoryResponse;
     }
 

@@ -44,4 +44,3 @@ public class BookResponse {
         return result;
     }
 }
-

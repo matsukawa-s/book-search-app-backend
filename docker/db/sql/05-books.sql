@@ -7,6 +7,7 @@ create table books
     image_path varchar(300) null,
     link varchar(300) null,
     is_deleted boolean default false not null,
+    arrival_date datetime null,
     constraint books_pk
         primary key (id)
 );
