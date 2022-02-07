@@ -1,6 +1,8 @@
 package com.example.booksearchapp.mappers;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Category;
+import com.example.booksearchapp.entities.Label;
 import com.example.booksearchapp.forms.SearchForm;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,4 +13,6 @@ public interface BookMapper {
     public List<Book> findAll();
     public Book get(Integer id);
     public List<Book> search(SearchForm searchForm);
+    public List<Category> categoryList();
+    public List<Label> labelList();
 }

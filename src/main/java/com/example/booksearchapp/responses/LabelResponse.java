@@ -13,15 +13,11 @@ import java.util.List;
 public class LabelResponse {
     Integer id;
     String name;
-    Integer sortNumber;
-    Integer labelGroupId;
 
     public static LabelResponse from(Label label){
         LabelResponse labelResponse = new LabelResponse();
         labelResponse.setId(label.getId());
         labelResponse.setName(label.getName());
-        labelResponse.setSortNumber(label.getSortNumber());
-        labelResponse.setLabelGroupId(label.getLabelGroupId());
         return labelResponse;
     }
 

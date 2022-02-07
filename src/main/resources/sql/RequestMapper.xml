@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.booksearchapp.mappers.RequestMapper">
+    <!-- 申請 -->
+    <insert id="request">
+        INSERT INTO requests VALUES (
+        NULL,
+        1,
+        #{book_name}
+        #{link}
+        #{reason}
+        NOW(),
+        false)
+    </insert>
+
+    <!-- 申請中リスト　ユーザー -->
+    <select id="userRequests">
+        SELECT
+        requests.book_name     as  requests_book_name,
+        requests.request_date  as  requests_request_date
+        FROM requests
+        WHERE requests.user_id = 1
+        AND requests.is_deleted = 0;
+        ORDER BY requests.request_date DESC
+    </select>
+
+    <!-- 申請履歴 -->
+    <select id="requestHistory">
+        SELECT
+        requests.book_name     as  requests_book_name,
+        requests.request_date  as  requests_request_date
+        FROM requests
+        WHERE requests.user_id = 1
+        ORDER BY requests.request_date DESC
+    </select>
+
+    <!-- 申請中リスト　管理者 -->
+    <select id="acceptRequest">
+        SELECT
+        requests.book_name     as  requests_book_name,
+        requests.request_date  as  requests_request_date
+
+        FROM requests
+        WHERE requests.is_deleted = 0;
+        ORDER BY requests.request_date DESC
+    </select>
+    <!-- 申請詳細 -->
+
+
+
+    <resultMap type="com.example.booksearchapp.entities.Request" id="requestList">
+        <id column="requests_id" property="id"/>
+        <result column="requests_user_id" property="userId"/>
+        <result column="requests_book_name" property="bookName"/>
+        <result column="requests_link" property="link"/>
+        <result column="requests_reason" property="reason"/>
+        <result column="requests_request_date" property="requestDate"/>
+        <result column="requests_is_deleted" property="isDeleted"/>
+        <association property="user" javaType="com.example.booksearchapp.entities.User">
+            <id column="users_id" property="id"/>
+            <result column="users_first_name" property="firstName"/>
+            <result column="users_last_name" property="lastName"/>
+        </association>
+    </resultMap>
+
+</mapper>
