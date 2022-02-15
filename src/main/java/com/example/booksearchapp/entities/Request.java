@@ -14,5 +14,5 @@ public class Request {
     String link;
     String reason;
     Date requestDate;
-    Boolean isDeleted;
+    Integer status;
 }

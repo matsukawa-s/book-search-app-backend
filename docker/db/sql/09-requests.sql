@@ -6,7 +6,7 @@ create table requests
     link varchar(300) null,
     reason varchar(300) not null,
     request_date datetime not null,
-    is_deleted boolean default false not null,
+    status int not null,
     constraint requests_pk
         primary key (id),
     constraint requests_user_id_fk

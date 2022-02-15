@@ -10,25 +10,26 @@
         #{link}
         #{reason}
         NOW(),
-        false)
+        1)
     </insert>
 
     <!-- 申請中リスト　ユーザー -->
-    <select id="userRequests">
+    <select id="userRequests" resultType="com.example.booksearchapp.entities.Request">
         SELECT
-        requests.book_name     as  requests_book_name,
-        requests.request_date  as  requests_request_date
+        book_name,
+        request_date
         FROM requests
-        WHERE requests.user_id = 1
-        AND requests.is_deleted = 0;
-        ORDER BY requests.request_date DESC
+        WHERE user_id = 1
+        and status = 0
+        ORDER BY request_date DESC
     </select>
 
-    <!-- 申請履歴 -->
+    <!-- 申請履歴  ユーザー-->
     <select id="requestHistory">
         SELECT
-        requests.book_name     as  requests_book_name,
-        requests.request_date  as  requests_request_date
+        book_name,
+        request_date,
+        status,
         FROM requests
         WHERE requests.user_id = 1
         ORDER BY requests.request_date DESC
@@ -39,12 +40,22 @@
         SELECT
         requests.book_name     as  requests_book_name,
         requests.request_date  as  requests_request_date
-
         FROM requests
-        WHERE requests.is_deleted = 0;
         ORDER BY requests.request_date DESC
     </select>
-    <!-- 申請詳細 -->
+    <!-- 申請詳細
+    <select id="detail">
+        SELECT
+    </select> -->
+
+    <!-- 申請履歴　管理者
+    <select id="requestAll">
+        SELECT
+        requests.id   as  requests_id,
+
+
+    </select> -->
+
 
 
 
