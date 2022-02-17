@@ -4,6 +4,7 @@ import com.example.booksearchapp.entities.Book;
 import com.example.booksearchapp.entities.Category;
 import com.example.booksearchapp.entities.Label;
 import com.example.booksearchapp.entities.Lending;
+import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.mappers.BookMapper;
 import com.example.booksearchapp.mappers.LendingAndBorrowingMapper;
@@ -38,18 +39,18 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Integer borrow(Integer id) {
-        Integer count = lendingAndBorrowingMapper.count(id);
+    public Integer borrow(BorrowForm borrowForm) {
+        Integer count = lendingAndBorrowingMapper.count(borrowForm);
         if(count <= 0){
             return 0;
         }else{
-            return lendingAndBorrowingMapper.borrow(id);
+            return lendingAndBorrowingMapper.borrow(borrowForm);
         }
     }
 
     @Override
-    public Integer returnBook(Integer id) {
-        return lendingAndBorrowingMapper.returnBook(id);
+    public Integer returnBook(BorrowForm borrowForm) {
+        return lendingAndBorrowingMapper.returnBook(borrowForm);
     }
 
     @Override
