@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.booksearchapp.mappers.LendingAndBorrowingMapper">
     <!-- 借りる -->
-    <insert id="borrow">
+    <insert id="borrow" parameterType="com.example.booksearchapp.forms.BorrowForm">
         INSERT INTO lendings VALUES (
         NULL,
         #{id},
@@ -12,7 +12,7 @@
     </insert>
 
     <!-- 返す -->
-    <update id="returnBook">
+    <update id="returnBook" parameterType="com.example.booksearchapp.forms.BorrowForm">
         UPDATE lendings
         SET return_time = NOW()
         WHERE id = #{id}
@@ -51,7 +51,7 @@
         ORDER BY lendings.lending_time DESC
     </select>
 
-    <select id="count" resultType="Integer">
+    <select id="count" resultType="Integer" parameterType="com.example.booksearchapp.forms.BorrowForm">
         SELECT books.number - (SELECT COUNT(*)
         FROM lendings
         WHERE return_time IS NULL
