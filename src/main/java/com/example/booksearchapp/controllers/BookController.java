@@ -4,6 +4,7 @@ import com.example.booksearchapp.entities.Book;
 import com.example.booksearchapp.entities.Category;
 import com.example.booksearchapp.entities.Label;
 import com.example.booksearchapp.entities.Lending;
+import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.responses.*;
 import com.example.booksearchapp.services.IBookService;
@@ -44,16 +45,16 @@ public class BookController {
     // 借りる
     @PostMapping("/borrow")
     @ResponseBody
-    public Integer borrow(Integer id) {
-        Integer lending = bookService.borrow(id);
+    public Integer borrow(@RequestBody BorrowForm borrowForm) {
+        Integer lending = bookService.borrow(borrowForm);
         return lending;
     }
 
     // 返す
     @PostMapping("/return")
     @ResponseBody
-    public Integer returnBook(Integer id) {
-        Integer lending = bookService.returnBook(id);
+    public Integer returnBook(@RequestBody BorrowForm borrowForm) {
+        Integer lending = bookService.returnBook(borrowForm);
         return lending;
     }
 
