@@ -11,5 +11,5 @@ public class User {
     String lastName;
     String password;
     Integer authority;
-    Boolean idDeleted;
+    Boolean isDeleted;
 }
