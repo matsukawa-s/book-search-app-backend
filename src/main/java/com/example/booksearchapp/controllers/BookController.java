@@ -1,15 +1,19 @@
 package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Book;
-import com.example.booksearchapp.entities.Category;
-import com.example.booksearchapp.entities.Label;
+import com.example.booksearchapp.entities.Genre;
+import com.example.booksearchapp.entities.Tag;
 import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.responses.*;
 import com.example.booksearchapp.services.IBookService;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -80,16 +84,16 @@ public class BookController {
     }
 
     // カテゴリ一覧
-    @GetMapping("/categories")
-    public List<CategoryResponse> categoryList() {
-        List<Category> categoryList = bookService.categoryList();
-        return CategoryResponse.from(categoryList);
+    @GetMapping("/genres")
+    public List<GenreResponse> genreList() {
+        List<Genre> genreList = bookService.genreList();
+        return GenreResponse.from(genreList);
     }
 
     // ラベル一覧
-    @GetMapping("/labels")
-    public List<LabelResponse> labelList() {
-        List<Label> labelList = bookService.labelList();
-        return LabelResponse.from(labelList);
+    @GetMapping("/tags")
+    public List<TagResponse> tagList() {
+        List<Tag> tagList = bookService.tagList();
+        return TagResponse.from(tagList);
     }
 }

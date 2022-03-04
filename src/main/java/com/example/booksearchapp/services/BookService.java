@@ -1,14 +1,13 @@
 package com.example.booksearchapp.services;
 
 import com.example.booksearchapp.entities.Book;
-import com.example.booksearchapp.entities.Category;
-import com.example.booksearchapp.entities.Label;
+import com.example.booksearchapp.entities.Genre;
+import com.example.booksearchapp.entities.Tag;
 import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.mappers.BookMapper;
 import com.example.booksearchapp.mappers.LendingAndBorrowingMapper;
-import com.example.booksearchapp.responses.LendingResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,13 +68,13 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<Category> categoryList(){
-        return bookMapper.categoryList();
+    public List<Genre> genreList(){
+        return bookMapper.genreList();
     }
 
     @Override
-    public List<Label> labelList() {
-        return bookMapper.labelList();
+    public List<Tag> tagList() {
+        return bookMapper.tagList();
     }
 
 }

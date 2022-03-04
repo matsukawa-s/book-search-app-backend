@@ -6,9 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Label {
+public class Tag {
     Integer id;
     String name;
     Integer sortNumber;
-    Integer labelGroupId;
+    Integer tagGroupId;
+    Boolean isDeleted;
 }
