@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static com.example.booksearchapp.SecurityConstants.LOGIN_URL;
 import static com.example.booksearchapp.SecurityConstants.SIGNUP_URL;
+import static com.example.booksearchapp.security.UserRoles.ROLE_ADMIN;
+import static com.example.booksearchapp.security.UserRoles.ROLE_USER;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(SIGNUP_URL, LOGIN_URL).permitAll()
+                .antMatchers("/books/**").hasAuthority(ROLE_USER.toString())
+                .antMatchers("/admin/**").hasAuthority(ROLE_ADMIN.toString())
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), bCryptPasswordEncoder()))
@@ -34,19 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-//    @Autowired
-//    public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(bCryptPasswordEncoder());
-//    }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder());
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

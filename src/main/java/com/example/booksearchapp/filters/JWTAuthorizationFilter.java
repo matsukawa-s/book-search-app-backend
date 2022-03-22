@@ -1,9 +1,11 @@
 package com.example.booksearchapp.filters;
 
+import com.example.booksearchapp.security.SecurityUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -45,16 +47,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            // parse the token.
-            String user = Jwts.parserBuilder()
+            var claims = Jwts.parserBuilder()
                     .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8)))
                     .build()
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject();
+                    .getBody();
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            var userId = claims.get("sub");
+            var role = (Integer)claims.get("role");
+
+            if (claims != null) {
+                return new UsernamePasswordAuthenticationToken(userId, null, SecurityUtils.getAuthority(role));
             }
             return null;
         }
