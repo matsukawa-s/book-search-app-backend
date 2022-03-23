@@ -1,6 +1,10 @@
 package com.example.booksearchapp.services;
 
 import com.example.booksearchapp.entities.Book;
+import com.example.booksearchapp.entities.Genre;
+import com.example.booksearchapp.entities.Tag;
+import com.example.booksearchapp.entities.Lending;
+import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.mappers.BookMapper;
 import com.example.booksearchapp.mappers.LendingAndBorrowingMapper;
@@ -34,14 +38,43 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Integer borrow(Integer id) {
-        return lendingAndBorrowingMapper.borrow(id);
+    public Integer borrow(BorrowForm borrowForm) {
+        Integer count = lendingAndBorrowingMapper.count(borrowForm);
+        if(count <= 0){
+            return 0;
+        }else{
+            return lendingAndBorrowingMapper.borrow(borrowForm);
+        }
     }
 
     @Override
-    public Integer returnBook(Integer id) {
-        return lendingAndBorrowingMapper.returnBook(id);
+    public Integer returnBook(BorrowForm borrowForm) {
+        return lendingAndBorrowingMapper.returnBook(borrowForm);
     }
 
+    @Override
+    public List<Lending> lending() {
+        return lendingAndBorrowingMapper.lending();
+    }
+
+    @Override
+    public List<Lending> history() {
+        return lendingAndBorrowingMapper.history();
+    }
+
+    @Override
+    public List<Lending> bookhistory(Integer id) {
+        return lendingAndBorrowingMapper.bookHistory(id);
+    }
+
+    @Override
+    public List<Genre> genreList(){
+        return bookMapper.genreList();
+    }
+
+    @Override
+    public List<Tag> tagList() {
+        return bookMapper.tagList();
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.example.booksearchapp.forms;
 
-import com.example.booksearchapp.responses.LabelResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +10,6 @@ import java.util.List;
 
 public class SearchForm {
     String name;
-    String label;
-    List<String> category;
+    List<String> tag;
+    List<String> genre;
 }

@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Category {
+public class Genre {
     Integer id;
     String name;
-    Boolean idDeleted;
+    Boolean isDeleted;
     Integer sortNumber;
 }

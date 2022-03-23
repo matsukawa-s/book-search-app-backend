@@ -1,25 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.booksearchapp.mappers.LendingAndBorrowingMapper">
-    <insert id="borrow">
+    <!-- 借りる -->
+    <insert id="borrow" parameterType="com.example.booksearchapp.forms.BorrowForm">
         INSERT INTO lendings VALUES (
-            NULL,
-            #{id},
-            1,
-            NOW(),
-            NULL)
+        NULL,
+        #{id},
+        1,
+        NOW(),
+        NULL)
     </insert>
 
-    <update id="returnBook">
+    <!-- 返す -->
+    <update id="returnBook" parameterType="com.example.booksearchapp.forms.BorrowForm">
         UPDATE lendings
         SET return_time = NOW()
         WHERE id = #{id}
+        AND return_time IS NULL
     </update>
 
+    <!-- マイページ　貸出中 -->
+    <select id="lending" resultMap="lendingList">
+        SELECT
+        lendings.id             as  lendings_id,
+        lendings.lending_time   as  lendings_lending_time,
+        books.id                as  books_id,
+        books.name              as  books_name,
+        books.image_path        as  books_image_path
+        FROM lendings
+        LEFT JOIN books
+        ON lendings.book_id = books.id
+        WHERE lendings.user_id = '1'
+        AND lendings.return_time IS NULL
+        ORDER BY lendings.lending_time DESC
+    </select>
+
+    <!-- マイページ　貸出履歴 -->
+    <select id="history" resultMap="lendingList">
+        SELECT
+        lendings.id             as  lendings_id,
+        lendings.lending_time   as  lendings_lending_time,
+        lendings.return_time    as  lendings_return_time,
+        books.id                as  books_id,
+        books.name              as  books_name,
+        books.image_path        as  books_image_path
+        FROM lendings
+        LEFT JOIN books
+        ON lendings.book_id = books.id
+        WHERE lendings.user_id = '1'
+        ORDER BY lendings.lending_time DESC
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="com.example.booksearchapp.forms.BorrowForm">
+        SELECT books.number - (SELECT COUNT(*)
+        FROM lendings
+        WHERE return_time IS NULL
+        AND book_id = #{id})
+        FROM books
+        WHERE id = #{id}
+    </select>
+
+    <!-- 本詳細ページ　貸出履歴 -->
+    <select id="bookHistory" resultMap="lendingList">
+        SELECT
+        lendings.lending_time   as  lendings_lending_time,
+        users.first_name        as  users_first_name,
+        users.last_name         as  users_last_name
+        FROM lendings
+        LEFT JOIN users
+        ON lendings.user_id = users.id
+        WHERE lendings.book_id = #{id}
+        ORDER BY lendings.lending_time DESC
+        LIMIT 3
+    </select>
 
 
-
-
+    <resultMap type="com.example.booksearchapp.entities.Lending" id="lendingList">
+        <id column="lendings_id" property="id"/>
+        <result column="lendings_user_id" property="userId"/>
+        <result column="lendings_lending_time" property="lendingTime"/>
+        <result column="lendings_return_time" property="returnTime"/>
+        <association property="book" javaType="com.example.booksearchapp.entities.Book">
+            <id column="books_id" property="id"/>
+            <result column="books_name" property="name"/>
+            <result column="books_image_path" property="imagePath"/>
+        </association>
+        <association property="user" javaType="com.example.booksearchapp.entities.User">
+            <id column="users_id" property="id"/>
+            <result column="users_first_name" property="firstName"/>
+            <result column="users_last_name" property="lastName"/>
+        </association>
+    </resultMap>
 
 
 </mapper>

@@ -18,8 +18,8 @@ public class BookResponse {
     Integer number;
     String imagePath;
     String link;
-    List<LabelResponse> labels;
-    List<CategoryResponse> categories;
+    List<TagResponse> tags;
+    List<GenreResponse> genres;
     Integer booksCount;
 
     public static BookResponse from(Book book){
@@ -30,8 +30,8 @@ public class BookResponse {
         bookResponse.setNumber(book.getNumber());
         bookResponse.setImagePath(book.getImagePath());
         bookResponse.setLink(book.getLink());
-        bookResponse.setLabels(LabelResponse.from(book.getLabels()));
-        bookResponse.setCategories(CategoryResponse.from(book.getCategories()));
+        bookResponse.setTags(TagResponse.from(book.getTags()));
+        bookResponse.setGenres(GenreResponse.from(book.getGenres()));
         bookResponse.setBooksCount(book.getBooksCount());
         return bookResponse;
     }
@@ -44,4 +44,3 @@ public class BookResponse {
         return result;
     }
 }
-

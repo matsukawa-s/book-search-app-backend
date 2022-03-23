@@ -7,10 +7,12 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class Lending {
+public class Request {
     Integer id;
-    Book book;
-    User user;
-    Date lendingTime;
-    Date returnTime;
+    Integer userId;
+    String bookName;
+    String link;
+    String reason;
+    Date requestDate;
+    Boolean isDeleted;
 }
