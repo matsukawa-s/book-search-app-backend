@@ -1,52 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.booksearchapp.mappers.BookMapper">
-    <select id="findAll1" resultType="com.example.booksearchapp.entities.Book">
-        SELECT * FROM books
-    </select>
-
-    <!-- 書籍の一覧取得 -->
-    <select id="findAll" resultMap="bookList">
-        SELECT
-            books.id                as  books_id,
-            books.isbn_code         as  books_isbn_code,
-            books.name              as  books_name,
-            books.number            as  books_number,
-            books.image_path        as  books_image_path,
-            books.link              as  books_link,
-            tags.id               as  tags_id,
-            tags.name             as  tags_name,
-            tags.sort_number      as  tags_sort_number,
-            tags.tag_group_id   as  tags_tag_group_id,
-            genres.id           as  genres_id,
-            genres.name         as  genres_name,
-            genres.sort_number  as  genres_sort_number,
-            books.number - coalesce(book_count.lending_count, 0)  as  books_count
-        FROM books
-        LEFT JOIN book_genres
-        ON books.id = book_genres.book_id
-        LEFT JOIN genres
-        ON book_genres.genre_id = genres.id
-        LEFT JOIN book_tags
-        ON books.id = book_tags.book_id
-        LEFT JOIN tags
-        ON book_tags.tag_id = tags.id
-        LEFT JOIN tag_groups
-        ON tags.tag_group_id = tag_groups.id
-        LEFT JOIN
-            (SELECT book_id, count(*) AS lending_count
-            FROM lendings
-            WHERE return_time IS NULL
-            GROUP BY book_id) book_count
-        ON books.id = book_count.book_id
-        WHERE books.is_deleted = 0
-        GROUP BY
-        books.id,
-        tags.id,
-        genres.id
-        ;
-    </select>
-
 
     <!-- 書籍の一件取得 -->
     <select id="get" resultMap="bookList">
@@ -64,7 +18,7 @@
         genres.id           as  genres_id,
         genres.name         as  genres_name,
         genres.sort_number  as  genres_sort_number,
-        books.number - count(lendings.lending_time)  as  books_count
+        books.number - coalesce(book_count.lending_count, 0)  as  books_count
         FROM books
         LEFT JOIN book_genres
         ON books.id = book_genres.book_id
@@ -76,11 +30,14 @@
         ON book_tags.tag_id = tags.id
         LEFT JOIN tag_groups
         ON tags.tag_group_id = tag_groups.id
-        LEFT JOIN lendings
-        ON books.id = lendings.book_id
+        LEFT JOIN
+        (SELECT book_id, count(*) AS lending_count
+        FROM lendings
+        WHERE return_time IS NULL
+        GROUP BY book_id) book_count
+        ON books.id = book_count.book_id
         WHERE books.id = #{id}
         AND books.is_deleted = 0
-        AND lendings.return_time IS NULL
         GROUP BY
         books.id,
         tags.id,
@@ -103,7 +60,7 @@
         genres.id           as  genres_id,
         genres.name         as  genres_name,
         genres.sort_number  as  genres_sort_number,
-        books.number - count(lendings.lending_time)  as  books_count
+        books.number - coalesce(book_count.lending_count, 0)  as  books_count
         FROM books
         LEFT JOIN book_genres
         ON books.id = book_genres.book_id
@@ -115,10 +72,13 @@
         ON book_tags.tag_id = tags.id
         LEFT JOIN tag_groups
         ON tags.tag_group_id = tag_groups.id
-        LEFT JOIN lendings
-        ON books.id = lendings.book_id
+        LEFT JOIN
+        (SELECT book_id, count(*) AS lending_count
+        FROM lendings
+        WHERE return_time IS NULL
+        GROUP BY book_id) book_count
+        ON books.id = book_count.book_id
         WHERE books.is_deleted = 0
-        AND lendings.return_time IS NULL
         <if test="name != null and name != ''">AND books.name LIKE'%${name}%'</if>
         <if test="tag != null and tag.size() > 0">AND tags.id IN
             <foreach item="tag" open="(" close=")" collection="tag" separator=",">
@@ -136,27 +96,19 @@
         genres.id
     </select>
 
-    <!-- カテゴリ一覧 -->
-    <select id="genreList" resultType="com.example.booksearchapp.entities.Genre">
+    <!-- 本詳細ページ　貸出履歴 -->
+    <select id="bookHistory" resultMap="lendingList">
         SELECT
-        id,
-        name
-        FROM genres
-        WHERE is_deleted = 0
-        ORDER BY sort_number
+        lendings.lending_time   as  lendings_lending_time,
+        users.first_name        as  users_first_name,
+        users.last_name         as  users_last_name
+        FROM lendings
+        LEFT JOIN users
+        ON lendings.user_id = users.id
+        WHERE lendings.book_id = #{id}
+        ORDER BY lendings.lending_time DESC
+        LIMIT 3
     </select>
-
-    <!-- ラベル一覧 -->
-    <select id="tagList" resultType="com.example.booksearchapp.entities.Tag">
-        SELECT
-        id,
-        name
-        FROM tags
-        WHERE tag_group_id = 1
-        ORDER BY sort_number
-    </select>
-
-
 
     <!-- 結合 -->
     <resultMap type="com.example.booksearchapp.entities.Book" id="bookList">
@@ -180,6 +132,18 @@
             <result column="genres_is_deleted" property="isDeleted"/>
             <result column="genres_sort_number" property="sortNumber"/>
         </collection>
+    </resultMap>
+
+    <resultMap type="com.example.booksearchapp.entities.Lending" id="lendingList">
+        <id column="lendings_id" property="id"/>
+        <result column="lendings_user_id" property="userId"/>
+        <result column="lendings_lending_time" property="lendingTime"/>
+        <result column="lendings_return_time" property="returnTime"/>
+        <association property="user" javaType="com.example.booksearchapp.entities.User">
+            <id column="users_id" property="id"/>
+            <result column="users_first_name" property="firstName"/>
+            <result column="users_last_name" property="lastName"/>
+        </association>
     </resultMap>
 
 
