@@ -10,14 +10,13 @@ import com.example.booksearchapp.forms.SearchForm;
 import java.util.List;
 
 public interface IBookService {
-    List<Book> findAll();
     Book get(Integer id);
-    List<Book> search(SearchForm searchForm);
-    Integer borrow(BorrowForm borrowForm);
-    Integer returnBook(BorrowForm borrowForm);
-    List<Lending> lending();
-    List<Lending> history();
+    List<Book> get(SearchForm searchForm);
+//    Integer borrow(BorrowForm borrowForm);
+//    Integer returnBook(BorrowForm borrowForm);
+//    List<Lending> lending();
+//    List<Lending> history();
     List<Lending> bookhistory(Integer id);
-    List<Genre> genreList();
-    List<Tag> tagList();
+//    List<Genre> genreList();
+//    List<Tag> tagList();
 }
