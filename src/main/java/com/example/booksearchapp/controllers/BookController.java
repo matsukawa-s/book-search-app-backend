@@ -1,19 +1,12 @@
 package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Book;
-import com.example.booksearchapp.entities.Genre;
-import com.example.booksearchapp.entities.Tag;
 import com.example.booksearchapp.entities.Lending;
-import com.example.booksearchapp.forms.BorrowForm;
 import com.example.booksearchapp.forms.SearchForm;
 import com.example.booksearchapp.responses.*;
 import com.example.booksearchapp.services.IBookService;
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @RestController

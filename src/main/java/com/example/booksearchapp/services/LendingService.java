@@ -25,5 +25,4 @@ public class LendingService implements ILendingService {
     public Integer returnBook(BorrowForm borrowForm) {
         return lendingMapper.returnBook(borrowForm);
     }
-
 }

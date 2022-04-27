@@ -2,7 +2,6 @@ package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Genre;
 import com.example.booksearchapp.responses.GenreResponse;
-import com.example.booksearchapp.services.IBookService;
 import com.example.booksearchapp.services.IGenreService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

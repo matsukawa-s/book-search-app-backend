@@ -27,8 +27,6 @@ public class BookHistoryResponse {
             result.add(BookHistoryResponse.from(lending));
         }
         return result;
-
-
     }
 
 }

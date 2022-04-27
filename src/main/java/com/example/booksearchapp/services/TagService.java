@@ -18,5 +18,4 @@ public class TagService implements ITagService {
     public List<Tag> tagList() {
         return tagMapper.tagList();
     }
-
 }

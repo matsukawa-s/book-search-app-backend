@@ -1,6 +1,5 @@
 package com.example.booksearchapp.responses;
 
-import com.example.booksearchapp.entities.Lending;
 import com.example.booksearchapp.entities.User;
 import lombok.Getter;
 import lombok.Setter;

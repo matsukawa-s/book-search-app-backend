@@ -1,7 +1,6 @@
 package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.forms.BorrowForm;
-import com.example.booksearchapp.services.IBookService;
 import com.example.booksearchapp.services.ILendingService;
 import org.springframework.web.bind.annotation.*;
 

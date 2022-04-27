@@ -5,79 +5,79 @@
     <!-- 書籍の一件取得 -->
     <select id="get" resultMap="bookList">
         SELECT
-        books.id                as  books_id,
-        books.isbn_code         as  books_isbn_code,
-        books.name              as  books_name,
-        books.number            as  books_number,
-        books.image_path        as  books_image_path,
-        books.link              as  books_link,
-        tags.id               as  tags_id,
-        tags.name             as  tags_name,
-        tags.sort_number      as  tags_sort_number,
-        tags.tag_group_id   as  tags_tag_group_id,
-        genres.id           as  genres_id,
-        genres.name         as  genres_name,
-        genres.sort_number  as  genres_sort_number,
-        books.number - coalesce(book_count.lending_count, 0)  as  books_count
+            books.id                as  books_id,
+            books.isbn_code         as  books_isbn_code,
+            books.name              as  books_name,
+            books.number            as  books_number,
+            books.image_path        as  books_image_path,
+            books.link              as  books_link,
+            tags.id               as  tags_id,
+            tags.name             as  tags_name,
+            tags.sort_number      as  tags_sort_number,
+            tags.tag_group_id   as  tags_tag_group_id,
+            genres.id           as  genres_id,
+            genres.name         as  genres_name,
+            genres.sort_number  as  genres_sort_number,
+            books.number - coalesce(book_count.lending_count, 0)  as  books_count
         FROM books
         LEFT JOIN book_genres
-        ON books.id = book_genres.book_id
+            ON books.id = book_genres.book_id
         LEFT JOIN genres
-        ON book_genres.genre_id = genres.id
+            ON book_genres.genre_id = genres.id
         LEFT JOIN book_tags
-        ON books.id = book_tags.book_id
+            ON books.id = book_tags.book_id
         LEFT JOIN tags
-        ON book_tags.tag_id = tags.id
+            ON book_tags.tag_id = tags.id
         LEFT JOIN tag_groups
-        ON tags.tag_group_id = tag_groups.id
+            ON tags.tag_group_id = tag_groups.id
         LEFT JOIN
-        (SELECT book_id, count(*) AS lending_count
-        FROM lendings
-        WHERE return_time IS NULL
-        GROUP BY book_id) book_count
-        ON books.id = book_count.book_id
+            (SELECT book_id, count(*) AS lending_count
+                FROM lendings
+                WHERE return_time IS NULL
+                GROUP BY book_id) book_count
+            ON books.id = book_count.book_id
         WHERE books.id = #{id}
-        AND books.is_deleted = 0
+            AND books.is_deleted = 0
         GROUP BY
-        books.id,
-        tags.id,
-        genres.id
+            books.id,
+            tags.id,
+            genres.id
     </select>
 
     <!-- 書籍の検索 -->
     <select id="search" parameterType="com.example.booksearchapp.forms.SearchForm" resultMap="bookList">
         SELECT
-        books.id                as  books_id,
-        books.isbn_code         as  books_isbn_code,
-        books.name              as  books_name,
-        books.number            as  books_number,
-        books.image_path        as  books_image_path,
-        books.link              as  books_link,
-        tags.id               as  tags_id,
-        tags.name             as  tags_name,
-        tags.sort_number      as  tags_sort_number,
-        tags.tag_group_id   as  tags_tag_group_id,
-        genres.id           as  genres_id,
-        genres.name         as  genres_name,
-        genres.sort_number  as  genres_sort_number,
-        books.number - coalesce(book_count.lending_count, 0)  as  books_count
+            books.id                as  books_id,
+            books.isbn_code         as  books_isbn_code,
+            books.name              as  books_name,
+            books.number            as  books_number,
+            books.image_path        as  books_image_path,
+            books.link              as  books_link,
+            tags.id               as  tags_id,
+            tags.name             as  tags_name,
+            tags.sort_number      as  tags_sort_number,
+            tags.tag_group_id   as  tags_tag_group_id,
+            genres.id           as  genres_id,
+            genres.name         as  genres_name,
+            genres.sort_number  as  genres_sort_number,
+            books.number - coalesce(book_count.lending_count, 0)  as  books_count
         FROM books
         LEFT JOIN book_genres
-        ON books.id = book_genres.book_id
+            ON books.id = book_genres.book_id
         LEFT JOIN genres
-        ON book_genres.genre_id = genres.id
+            ON book_genres.genre_id = genres.id
         LEFT JOIN book_tags
-        ON books.id = book_tags.book_id
+            ON books.id = book_tags.book_id
         LEFT JOIN tags
-        ON book_tags.tag_id = tags.id
+            ON book_tags.tag_id = tags.id
         LEFT JOIN tag_groups
-        ON tags.tag_group_id = tag_groups.id
+            ON tags.tag_group_id = tag_groups.id
         LEFT JOIN
-        (SELECT book_id, count(*) AS lending_count
-        FROM lendings
-        WHERE return_time IS NULL
-        GROUP BY book_id) book_count
-        ON books.id = book_count.book_id
+            (SELECT book_id, count(*) AS lending_count
+                FROM lendings
+                WHERE return_time IS NULL
+                GROUP BY book_id) book_count
+            ON books.id = book_count.book_id
         WHERE books.is_deleted = 0
         <if test="name != null and name != ''">AND books.name LIKE'%${name}%'</if>
         <if test="tag != null and tag.size() > 0">AND tags.id IN
@@ -91,20 +91,20 @@
             </foreach>
         </if>
         GROUP BY
-        books.id,
-        tags.id,
-        genres.id
+            books.id,
+            tags.id,
+            genres.id
     </select>
 
     <!-- 本詳細ページ　貸出履歴 -->
     <select id="bookHistory" resultMap="lendingList">
         SELECT
-        lendings.lending_time   as  lendings_lending_time,
-        users.first_name        as  users_first_name,
-        users.last_name         as  users_last_name
+            lendings.lending_time   as  lendings_lending_time,
+            users.first_name        as  users_first_name,
+            users.last_name         as  users_last_name
         FROM lendings
         LEFT JOIN users
-        ON lendings.user_id = users.id
+            ON lendings.user_id = users.id
         WHERE lendings.book_id = #{id}
         ORDER BY lendings.lending_time DESC
         LIMIT 3
@@ -145,7 +145,4 @@
             <result column="users_last_name" property="lastName"/>
         </association>
     </resultMap>
-
-
-
 </mapper>

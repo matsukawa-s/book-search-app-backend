@@ -18,5 +18,4 @@ public class BookLendingResponse {
         bookLendingResponse.setImagePath(book.getImagePath());
         return bookLendingResponse;
     }
-
 }

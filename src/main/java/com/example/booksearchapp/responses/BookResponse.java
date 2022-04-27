@@ -1,7 +1,5 @@
 package com.example.booksearchapp.responses;
 
-
-
 import com.example.booksearchapp.entities.Book;
 import lombok.Getter;
 import lombok.Setter;

@@ -22,5 +22,4 @@ public class MyPageService implements IMyPageService {
     public List<Lending> history() {
         return myPageMapper.history();
     }
-
 }

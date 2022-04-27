@@ -2,7 +2,6 @@ package com.example.booksearchapp.controllers;
 
 import com.example.booksearchapp.entities.Tag;
 import com.example.booksearchapp.responses.TagResponse;
-import com.example.booksearchapp.services.IBookService;
 import com.example.booksearchapp.services.ITagService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
