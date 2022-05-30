@@ -7,6 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface MyPageMapper {
-    public List<Lending> lending();
-    public List<Lending> history();
+    public List<Lending> lending(final String userId);
+    public List<Lending> history(final String userId);
 }

@@ -6,16 +6,16 @@
         INSERT INTO lendings VALUES (
         NULL,
         #{id},
-        1,
+        #{userId},
         NOW(),
         NULL)
     </insert>
 
     <!-- 返す -->
-    <update id="returnBook" parameterType="com.example.booksearchapp.forms.BorrowForm">
+    <update id="returnBook" parameterType="com.example.booksearchapp.forms.BookReturnForm">
         UPDATE lendings
         SET return_time = NOW()
-        WHERE id = #{id}
+        WHERE id = #{lendingId}
         AND return_time IS NULL
     </update>
 
