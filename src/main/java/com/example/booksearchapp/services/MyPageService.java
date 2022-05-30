@@ -13,14 +13,14 @@ public class MyPageService implements IMyPageService {
     public MyPageService(MyPageMapper myPageMapper) {
         this.myPageMapper = myPageMapper;
     }
+
     @Override
-    public List<Lending> lending() {
-        return myPageMapper.lending();
+    public List<Lending> lending(final String userId) {
+        return myPageMapper.lending(userId);
     }
 
     @Override
-    public List<Lending> history() {
-        return myPageMapper.history();
+    public List<Lending> history(final String userId) {
+        return myPageMapper.history(userId);
     }
-
 }

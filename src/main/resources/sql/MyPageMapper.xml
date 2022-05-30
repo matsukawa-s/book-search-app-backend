@@ -12,7 +12,7 @@
         FROM lendings
         LEFT JOIN books
         ON lendings.book_id = books.id
-        WHERE lendings.user_id = '1'
+        WHERE lendings.user_id = #{userId}
         AND lendings.return_time IS NULL
         ORDER BY lendings.lending_time DESC
     </select>
@@ -29,7 +29,7 @@
         FROM lendings
         LEFT JOIN books
         ON lendings.book_id = books.id
-        WHERE lendings.user_id = '1'
+        WHERE lendings.user_id = #{userId}
         ORDER BY lendings.lending_time DESC
     </select>
 

@@ -55,8 +55,8 @@ public class BookController {
      * @param id
      * @return 表示する本の貸出履歴
      */
-    @GetMapping("/bookhistory/{id}")
-    public List<BookHistoryResponse> bookhistory(@PathVariable Integer id) {
+    @GetMapping("/{id}/history")
+    public List<BookHistoryResponse> bookHistory(@PathVariable Integer id) {
         List<Lending> lending = bookService.bookhistory(id);
         return BookHistoryResponse.from(lending);
     }

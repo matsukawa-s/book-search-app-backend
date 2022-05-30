@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BorrowForm {
-    Integer id;
-    String userId;
+public class BookReturnForm {
+    Long lendingId;
 }
