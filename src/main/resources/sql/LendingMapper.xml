@@ -28,32 +28,6 @@
         WHERE id = #{id}
     </select>
 
-    <!-- 本詳細ページ　貸出履歴 -->
-<!--    <select id="bookHistory" resultMap="lendingList">-->
-<!--        SELECT-->
-<!--        lendings.lending_time   as  lendings_lending_time,-->
-<!--        users.first_name        as  users_first_name,-->
-<!--        users.last_name         as  users_last_name-->
-<!--        FROM lendings-->
-<!--        LEFT JOIN users-->
-<!--        ON lendings.user_id = users.id-->
-<!--        WHERE lendings.book_id = #{id}-->
-<!--        ORDER BY lendings.lending_time DESC-->
-<!--        LIMIT 3-->
-<!--    </select>-->
-
-
-<!--    <resultMap type="com.example.booksearchapp.entities.Lending" id="lendingList">-->
-<!--        <id column="lendings_id" property="id"/>-->
-<!--        <result column="lendings_user_id" property="userId"/>-->
-<!--        <result column="lendings_lending_time" property="lendingTime"/>-->
-<!--        <result column="lendings_return_time" property="returnTime"/>-->
-<!--        <association property="user" javaType="com.example.booksearchapp.entities.User">-->
-<!--            <id column="users_id" property="id"/>-->
-<!--            <result column="users_first_name" property="firstName"/>-->
-<!--            <result column="users_last_name" property="lastName"/>-->
-<!--        </association>-->
-<!--    </resultMap>-->
 
 
 </mapper>

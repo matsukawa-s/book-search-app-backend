@@ -8,6 +8,7 @@ create table books
     link varchar(300) null,
     is_deleted boolean default false not null,
     arrival_date datetime null,
+    detail varchar(300) null,
     constraint books_pk
         primary key (id)
 );
