@@ -18,6 +18,7 @@ public class BookResponse {
     Integer number;
     String imagePath;
     String link;
+    String detail;
     List<TagResponse> tags;
     List<GenreResponse> genres;
     Integer booksCount;
@@ -30,6 +31,7 @@ public class BookResponse {
         bookResponse.setNumber(book.getNumber());
         bookResponse.setImagePath(book.getImagePath());
         bookResponse.setLink(book.getLink());
+        bookResponse.setDetail(book.getDetail());
         bookResponse.setTags(TagResponse.from(book.getTags()));
         bookResponse.setGenres(GenreResponse.from(book.getGenres()));
         bookResponse.setBooksCount(book.getBooksCount());

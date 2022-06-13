@@ -11,6 +11,7 @@
         books.number            as  books_number,
         books.image_path        as  books_image_path,
         books.link              as  books_link,
+        books.detail            as  books_detail,
         tags.id               as  tags_id,
         tags.name             as  tags_name,
         tags.sort_number      as  tags_sort_number,
@@ -119,6 +120,7 @@
         <result column="books_image_path" property="imagePath"/>
         <result column="books_link" property="link"/>
         <result column="books_is_deleted" property="isDeleted"/>
+        <result column="books_detail" property="detail"/>
         <result column="books_count" property="booksCount"/>
         <collection property="tags" ofType="com.example.booksearchapp.entities.Tag">
             <result column="tags_id" property="id"/>
