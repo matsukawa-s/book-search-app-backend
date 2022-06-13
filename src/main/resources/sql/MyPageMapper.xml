@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.booksearchapp.mappers.MyPageMapper">
+    <!-- マイページ　貸出中 -->
+    <select id="lending" resultMap="myPageList">
+        SELECT
+        lendings.id             as  lendings_id,
+        lendings.lending_time   as  lendings_lending_time,
+        books.id                as  books_id,
+        books.name              as  books_name,
+        books.image_path        as  books_image_path
+        FROM lendings
+        LEFT JOIN books
+        ON lendings.book_id = books.id
+        WHERE lendings.user_id = #{userId}
+        AND lendings.return_time IS NULL
+        ORDER BY lendings.lending_time DESC
+    </select>
+
+    <!-- マイページ　貸出履歴 -->
+    <select id="history" resultMap="myPageList">
+        SELECT
+        lendings.id             as  lendings_id,
+        lendings.lending_time   as  lendings_lending_time,
+        lendings.return_time    as  lendings_return_time,
+        books.id                as  books_id,
+        books.name              as  books_name,
+        books.image_path        as  books_image_path
+        FROM lendings
+        LEFT JOIN books
+        ON lendings.book_id = books.id
+        WHERE lendings.user_id = #{userId}
+        ORDER BY lendings.lending_time DESC
+    </select>
+
+    <resultMap type="com.example.booksearchapp.entities.Lending" id="myPageList">
+        <id column="lendings_id" property="id"/>
+        <result column="lendings_user_id" property="userId"/>
+        <result column="lendings_lending_time" property="lendingTime"/>
+        <result column="lendings_return_time" property="returnTime"/>
+        <association property="book" javaType="com.example.booksearchapp.entities.Book">
+            <id column="books_id" property="id"/>
+            <result column="books_name" property="name"/>
+            <result column="books_image_path" property="imagePath"/>
+        </association>
+    </resultMap>
+</mapper>

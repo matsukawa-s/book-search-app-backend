@@ -18,6 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("books")
+/**
+ * 本
+ */
 public class BookController {
     private final IBookService bookService;
 
@@ -25,75 +28,36 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    // 書籍の一覧取得
-    @GetMapping("")
-    public List<BookResponse> findAll() {
-        List<Book> bookList = bookService.findAll();
-        return BookResponse.from(bookList);
-    }
-
-    // 書籍の一件取得
+    /**
+     * 書籍の一件取得
+     * @param id
+     * @return 本の詳細
+     */
     @GetMapping("/{id}")
     public BookResponse get(@PathVariable Integer id) {
         Book book = bookService.get(id);
         return BookResponse.from(book);
     }
 
-    // 書籍の検索
-    @GetMapping("/search")
-    public List<BookResponse> search(SearchForm searchForm) {
-        List<Book> bookList = bookService.search(searchForm);
+    /**
+     * 書籍の一覧表示、検索
+     * @param searchForm
+     * @return 本の一覧
+     */
+    @GetMapping("")
+    public List<BookResponse> get(SearchForm searchForm) {
+        List<Book> bookList = bookService.get(searchForm);
         return BookResponse.from(bookList);
     }
 
-    // 借りる
-    @PostMapping("/borrow")
-    @ResponseBody
-    public Integer borrow(@RequestBody BorrowForm borrowForm) {
-        Integer lending = bookService.borrow(borrowForm);
-        return lending;
-    }
-
-    // 返す
-    @PostMapping("/return")
-    @ResponseBody
-    public Integer returnBook(@RequestBody BorrowForm borrowForm) {
-        Integer lending = bookService.returnBook(borrowForm);
-        return lending;
-    }
-
-    // マイページ　貸出中
-    @GetMapping("/lending")
-    public List<LendingResponse> lending() {
-        List<Lending> lending = bookService.lending();
-        return LendingResponse.from(lending);
-    }
-
-    // マイページ　貸出履歴
-    @GetMapping("/history")
-    public List<HistoryResponse> history() {
-        List<Lending> lending = bookService.history();
-        return HistoryResponse.from(lending);
-    }
-
-    // 本詳細ページ　貸出履歴
-    @GetMapping("/bookhistory/{id}")
-    public List<BookHistoryResponse> bookhistory(@PathVariable Integer id) {
+    /**
+     * 本詳細ページ　貸出履歴
+     * @param id
+     * @return 表示する本の貸出履歴
+     */
+    @GetMapping("/{id}/history")
+    public List<BookHistoryResponse> bookHistory(@PathVariable Integer id) {
         List<Lending> lending = bookService.bookhistory(id);
         return BookHistoryResponse.from(lending);
-    }
-
-    // カテゴリ一覧
-    @GetMapping("/genres")
-    public List<GenreResponse> genreList() {
-        List<Genre> genreList = bookService.genreList();
-        return GenreResponse.from(genreList);
-    }
-
-    // ラベル一覧
-    @GetMapping("/tags")
-    public List<TagResponse> tagList() {
-        List<Tag> tagList = bookService.tagList();
-        return TagResponse.from(tagList);
     }
 }
